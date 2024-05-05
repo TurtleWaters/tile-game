@@ -1,25 +1,30 @@
 class_name tile
 
 extends Node3D
+
+const TileType = preload("res://scripts/TileType.gd").TileType
+const Direction = preload("res://scripts/Direction.gd").Direction
+
 const type_dict = {
-	"Straight": [[[0, -1], [0, 1]],
+	TileType.STRAIGHT: [[Direction.NORTH, Direction.SOUTH],
 	preload("res://import models/tile models/straightTile.glb")],
-	"Cross": [[[0, -1], [0, 1], [-1, 0], [1, 0]],
+	TileType.CROSS: [[Direction.WEST, Direction.EAST, Direction.SOUTH, Direction.NORTH],
 	preload("res://import models/tile models/crossTile.glb")],
-	"Turn": [[[0, -1], [1, 0]],
+	TileType.TURN: [[Direction.EAST, Direction.SOUTH],
 	preload("res://import models/tile models/turnTile.glb")],
-	"T-Section": [[[0, -1], [0, 1], [1, 0]],
+	TileType.T: [[Direction.SOUTH, Direction.EAST, Direction.NORTH],
 	preload("res://import models/tile models/tSectionTile.glb")],
-	"Stop": [[[0,-1]],
+	TileType.STOP: [[Direction.SOUTH],
 	preload("res://import models/tile models/stopTile.glb")]
 }
+
 
 var open_dirs = []
 var tile_rot = 0
 var tile_mod
 var coords = []
 
-func _init(tile_type: String, inst_loc: Array):
+func _init(tile_type: TileType, inst_loc: Array):
 	
 	coords = inst_loc
 	
@@ -34,11 +39,11 @@ func rotate_tile(degrees: int):
 	
 	var new_dirs = []
 	
-	var dirs_count = open_dirs.size()
-
-	for i in dirs_count:
-		for j in degrees:
-			new_dirs.append([open_dirs[i][1] * -1, open_dirs[i][0]])
+	for i in (open_dirs.size()):
+		new_dirs.append(Direction.values()[(open_dirs[i] + 1) % 4])
+	
 	open_dirs = new_dirs
+	
+	print(open_dirs)
 	
 	self.rotation = Vector3(0, tile_rot * (PI/180), 0)
