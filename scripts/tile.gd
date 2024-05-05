@@ -35,15 +35,13 @@ func _init(tile_type: TileType, inst_loc: Array):
 	add_child(tile_instance)
 	
 func rotate_tile(degrees: int): 
-	tile_rot = (tile_rot + (degrees * 90)) % 360
+	tile_rot = (tile_rot - (degrees * 90)) % 360
 	
 	var new_dirs = []
 	
 	for i in (open_dirs.size()):
-		new_dirs.append(Direction.values()[(open_dirs[i] + 1) % 4])
+		new_dirs.append(Direction.values()[(open_dirs[i] + degrees) % 4])
 	
 	open_dirs = new_dirs
-	
-	print(open_dirs)
 	
 	self.rotation = Vector3(0, tile_rot * (PI/180), 0)
