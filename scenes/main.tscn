@@ -1,12 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddb0s7buhvqua"]
+[gd_scene load_steps=3 format=3 uid="uid://bc70dao82k2fb"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_ynquw"]
+[ext_resource type="PackedScene" uid="uid://ca1q75ngcy2th" path="res://scenes/board.tscn" id="1_c6whg"]
+[ext_resource type="PackedScene" uid="uid://c6cb17nw0sroy" path="res://scenes/player.tscn" id="1_d6i2k"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_ynquw")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.613582, 0.789631, 0, -0.789631, 0.613582, 1.73135, 1.83002, 3.84452)
+[node name="Player" parent="." instance=ExtResource("1_d6i2k")]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.67236, 2.7409, 0.704947)
+[node name="board" parent="." instance=ExtResource("1_c6whg")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.87305, 0.487631, 0, -0.487631, -0.87305, 0, 2.27228, -3.85171)

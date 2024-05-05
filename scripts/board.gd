@@ -91,43 +91,32 @@ func _init():
 			
 	# post process rotations
 	for i in range (post_process):
-		print("post process series: " + str(i))
 		for h in (width * length):
 			var current_dir = tile_set[h].open_dirs
 			var con_score = [1.0,0]
-			print(" ")
-			print("TILE: " + str(h))
-			print("DEFAULT DIRECTIONS: " + str(current_dir))
 			
 			for j in range (4):
-				print("ROTATE BY: " + str(j * 90))
 				var rot_score = 1.0
 				var rot_dirs = []
 				for k in current_dir.size():
 					rot_dirs.append((current_dir[k] + j) % 4)
 				
-				print(rot_dirs)
 				
 				# north
 				if((h - width) >= 0 && (h - width) < tile_set.size() && tile_set[h - width].open_dirs.find(Direction.SOUTH) != -1 && rot_dirs.find(Direction.NORTH) != -1):
 					rot_score += 1.0
-					print("NORTH")
 					# east
 				if((h + 1) % width != 0 && tile_set[h + 1].open_dirs.find(Direction.WEST) != -1 && rot_dirs.find(Direction.EAST) != -1):
 					rot_score += 1.0
-					print("EAST")
 				# west
 				if((h - 1) % width != width - 1 && (h - 1) >= 0 && (h - 1) < tile_set.size() && tile_set[h - 1].open_dirs.find(Direction.EAST) != -1 && rot_dirs.find(Direction.WEST) != -1):
 					rot_score += 1.0
-					print("WEST")
 				# south
 				if((h + width) < tile_set.size() && tile_set[h + width].open_dirs.find(Direction.NORTH) != -1 && rot_dirs.find(Direction.SOUTH) != -1):
 					rot_score += 1.0
-					print("SOUTH")
 				
 				if rot_score > con_score[0]:
 					con_score = [rot_score, j]
-					print("OVERTAKEN")
 			
 			tile_set[h].rotate_tile(con_score[1])
 			
