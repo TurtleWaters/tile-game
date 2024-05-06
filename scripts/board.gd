@@ -16,6 +16,18 @@ func _init():
 	make_tile()
 	
 	for i in range (1, (width * length)):
+		
+		if (i == width / 2) || i == (width * (length - 1)) + (width / 2):
+			var force_tile = tile.new(TileType.values()[1], [i % width, i / width])
+			tile_set.append(force_tile)
+			
+			add_child(force_tile)
+			
+			force_tile.position = Vector3((i % width) * tileDims, 0, (i / width) * tileDims)
+			force_tile.scale = Vector3(tileDims/2, tileDims, tileDims/2)
+			
+			continue
+		
 		var choices = []
 		for j in TileType.size():
 			var rot_scores = []
