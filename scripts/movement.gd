@@ -5,12 +5,15 @@ extends CharacterBody3D
 @export var speed = walk_speed
 @export var sprint_speed = 2
 const sens = 0.01
+const ray_length = 1000
 
 var free = true
 
 @onready var pivot = $Pivot
 @onready var camera = $Pivot/Camera3D
 @onready var board = $"../board"
+
+var unit_group = preload("res://scenes/unit_group.tscn").get_script()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,6 +27,23 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	
+	#raycast for moving!!!
+	if Input.is_action_just_pressed("click") && (free == false):
+		var space_state = get_world_3d().direct_space_state
+		var mouse_pos = get_viewport().get_mouse_position()
+		
+		var origin = camera.project_ray_origin(mouse_pos)
+		var end = origin + camera.project_ray_normal(mouse_pos) * ray_length
+		var query = PhysicsRayQueryParameters3D.create(origin, end)
+		query.collide_with_areas = true
+		
+		var ray_result = space_state.intersect_ray(query)
+		
+		print(ray_result)
+		
+		if ray_result.size() > 0 && ray_result.collider is unit_group:
+			print("WE FOUND THAT SHIT!!!!")
+		
 	if Input.is_action_just_pressed("free_cam"):
 		if free == true:
 			free = false
@@ -33,7 +53,7 @@ func _physics_process(delta):
 			self.position.y = 2.2
 			pivot.rotation.y = 0
 			
-			Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			
 			camera.rotation.x = -deg_to_rad(75)
 		elif free == false:

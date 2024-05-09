@@ -4,3 +4,5 @@
 
 [node name="tile" type="Node3D"]
 script = ExtResource("1_htvcs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]

@@ -1,19 +1,21 @@
+class_name unit_group
+
 extends Node3D
 
 const min_dist = 0.2
 const max_dist = 1
 @export var group_size = 5
-const unit = preload("res://scenes/unit.gd")
+const unit = preload("res://scripts/unit.gd")
 
 const direction_dict = preload("res://scripts/Direction.gd").direction_dict
 
 var board
 var unit_set = []
 const unit_scale = .25
+@onready var collision = $CollisionShape3D 
 
 var tile_coords = [0, 0]
 var tile_dims
-var raycast_col
 
 var walk_areas = []
 
@@ -23,11 +25,10 @@ func _ready():
 	goal = $goal
 	
 	board = $"../board"
-	raycast_col = $StaticBody3D
 	
 	tile_dims = board.tileDims/2
 	self.position = Vector3(tile_coords[0] * tile_dims, 0.1, tile_coords[1] * tile_dims)
-	raycast_col.scale = Vector3(tile_dims * 2, tile_dims, tile_dims * 2)
+	collision.scale = Vector3(tile_dims * 2, tile_dims, tile_dims * 2)
 	
 	get_tile_area()
 	

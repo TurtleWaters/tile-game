@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://do5vijn7csaaj"
+path.s3tc="res://.godot/imported/mushUnit_bodyTex.png-bec7b5c5cbf07f1b3b465bc21befde15.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "bf5f9ef638cc7523c341f7e493f181ef"
+}
+
+[deps]
+
+source_file="res://import models/unit models/mushUnit_bodyTex.png"
+dest_files=["res://.godot/imported/mushUnit_bodyTex.png-bec7b5c5cbf07f1b3b465bc21befde15.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
