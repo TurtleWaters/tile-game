@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bc70dao82k2fb"]
+[gd_scene load_steps=4 format=3 uid="uid://bc70dao82k2fb"]
 
 [ext_resource type="PackedScene" uid="uid://ca1q75ngcy2th" path="res://scenes/board.tscn" id="1_c6whg"]
 [ext_resource type="PackedScene" uid="uid://c6cb17nw0sroy" path="res://scenes/player.tscn" id="1_d6i2k"]
+[ext_resource type="PackedScene" uid="uid://ox5sw6kwekvy" path="res://scenes/unit_group.tscn" id="1_wgj8h"]
 
 [node name="Node3D" type="Node3D"]
+
+[node name="unit group" parent="." instance=ExtResource("1_wgj8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78431, 0, 0.757658)
 
 [node name="Player" parent="." instance=ExtResource("1_d6i2k")]
 

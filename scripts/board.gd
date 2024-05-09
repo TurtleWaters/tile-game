@@ -1,9 +1,11 @@
+class_name board
+
 extends Node3D
 
 const width = 7
 const length = 7
 const tileDims = .5
-const post_process = 2
+const post_process = 3
 
 var tile_set = []
 const TileType = preload("res://scripts/TileType.gd").TileType

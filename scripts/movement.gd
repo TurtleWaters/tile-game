@@ -6,21 +6,41 @@ extends CharacterBody3D
 @export var sprint_speed = 2
 const sens = 0.01
 
+var free = true
+
 @onready var pivot = $Pivot
 @onready var camera = $Pivot/Camera3D
+@onready var board = $"../board"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion && free == true:
 		pivot.rotate_y(-event.relative.x * sens)
 		camera.rotate_x(-event.relative.y * sens)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-60), deg_to_rad(70))
 
 func _physics_process(delta):
-
+	
+	if Input.is_action_just_pressed("free_cam"):
+		if free == true:
+			free = false
+			speed = 0
+			self.position.x = (board.width / 2) * board.tileDims
+			self.position.z = (board.length * board.tileDims) / 1.5
+			self.position.y = 2.2
+			pivot.rotation.y = 0
+			
+			Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+			
+			camera.rotation.x = -deg_to_rad(75)
+		elif free == false:
+			free = true
+			speed = walk_speed
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var y_dir = 0
 	
@@ -32,9 +52,9 @@ func _physics_process(delta):
 	
 	var direction = (pivot.transform.basis * Vector3(input_dir.x, y_dir, input_dir.y)).normalized()
 	
-	if Input.is_action_pressed("sprint"):
+	if Input.is_action_pressed("sprint") && free == true:
 		speed = sprint_speed
-	if Input.is_action_just_released("sprint"):
+	if Input.is_action_just_released("sprint") && free == true:
 		speed = walk_speed
 		
 	if direction:
@@ -47,7 +67,3 @@ func _physics_process(delta):
 		velocity.y = move_toward(velocity.y, 0, speed)
 	
 	move_and_slide()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

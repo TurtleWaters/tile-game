@@ -23,10 +23,13 @@ var open_dirs = []
 var tile_rot = 0
 var tile_mod
 var coords = []
+var tile_type
 
-func _init(tile_type: TileType, inst_loc: Array):
+func _init(new_tile_type: TileType, inst_loc: Array):
 	
 	coords = inst_loc
+	
+	tile_type = new_tile_type
 	
 	open_dirs = type_dict[tile_type][0]
 	tile_mod = type_dict[tile_type][1]
